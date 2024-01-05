@@ -1,0 +1,117 @@
+1.Solving problems using array functions on rest countries data
+
+a.Get all the countries from Asia continent /region using Filter function
+
+import requests
+
+# Make a request to the REST countries API
+response = requests.get("https://restcountries.com/v3.1/all")
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the JSON data
+    countries_data = response.json()
+
+    # Use the filter function to get countries from Asia
+    asia_countries = list(filter(lambda country: 'continent' in country and 'Asia' in country['continent'], countries_data))
+
+    # Print the names of countries in Asia
+    for country in asia_countries:
+        print(country['name']['common'])
+else:
+    print("Failed to retrieve data from the API")
+
+b.Get all the countries with a population of less than 2 lakhs using Filter function
+
+import requests
+
+# Make a request to the REST countries API
+response = requests.get("https://restcountries.com/v3.1/all")
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the JSON data
+    countries_data = response.json()
+
+    # Use the filter function to get countries with a population less than 200,000
+    countries_with_low_population = list(filter(lambda country: 'population' in country and country['population'] < 200000, countries_data))
+
+    # Print the names of countries with low population
+    for country in countries_with_low_population:
+        print(country['name']['common'])
+else:
+    print("Failed to retrieve data from the API")
+
+c.Print the following details name, capital, flag, using forEach function
+
+import requests
+
+# Make a request to the REST countries API
+response = requests.get("https://restcountries.com/v3.1/all")
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the JSON data
+    countries_data = response.json()
+
+    # Use the forEach function to print details for each country
+    for country in countries_data:
+        name = country.get('name', {}).get('common', 'N/A')
+        capital = country.get('capital', ['N/A'])[0]
+        flag = country.get('flags', {}).get('png', 'N/A')
+
+        print(f"Name: {name}, Capital: {capital}, Flag: {flag}")
+else:
+    print("Failed to retrieve data from the API")
+
+d.Print the total population of countries using reduce function
+
+import requests
+from functools import reduce
+
+# Make a request to the REST countries API
+response = requests.get("https://restcountries.com/v3.1/all")
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the JSON data
+    countries_data = response.json()
+
+    # Define a function to sum the population
+    def sum_population(acc, country):
+        population = country.get('population', 0)
+        return acc + population
+
+    # Use the reduce function to calculate the total population
+    total_population = reduce(sum_population, countries_data, 0)
+
+    print(f"Total Population of Countries: {total_population}")
+else:
+    print("Failed to retrieve data from the API")
+
+e.Print the country that uses US dollars as currency.
+
+import requests
+
+# Make a request to the REST countries API
+response = requests.get("https://restcountries.com/v3.1/all")
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the JSON data
+    countries_data = response.json()
+
+    # Use the filter function to get countries that use US dollars as currency
+    us_dollar_countries = list(filter(lambda country: 'currencies' in country and 'USD' in country['currencies'], countries_data))
+
+    # Print the names of countries using US dollars as currency
+    if us_dollar_countries:
+        print("Countries using US dollars as currency:")
+        for country in us_dollar_countries:
+            print(country['name']['common'])
+    else:
+        print("No countries found using US dollars as currency.")
+else:
+    print("Failed to retrieve data from the API")
+
+ 
